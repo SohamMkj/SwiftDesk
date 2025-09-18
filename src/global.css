@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import "tailwindcss";
+
+
+* {
+    font-family: "Nunito", sans-serif;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-mainbg);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--color-mainbg);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #9ca3af;
+}
+
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #9ca3af transparent;
+}
+
+@keyframes fadeRotate {
+    from {
+        opacity: 0;
+        transform: scale(0.5) rotate(-90deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes fadeScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-fadeScale {
+    animation: fadeScale 0.5s ease-in-out;
+}
+
+.animate-fadeRotate {
+    animation: fadeRotate 0.5s ease-in-out;
+}
+
+
+@layer base {
+    :root {
+        --color-bg: #f3f3f3;
+        --color-text: #9a3412;
+        --color-primary: #de7635;
+        --color-secondary: #67605c;
+        --color-mainbg: #d7d7d7;
+        --color-card: #fffffffb;
+        --color-sidebar: #ffffffd6;
+    }
+
+    .dark {
+        --color-bg: #ffffff00;
+        --color-text: #fff7ed;
+        --color-primary: #fb923c;
+        --color-secondary: #a8a29e;
+        --color-mainbg: #000000;
+        --color-card: #000000;
+        --color-sidebar: rgb(0, 0, 0);
+    }
+}
+
+
+
+@layer components {
+    .bg-index {
+        background-color: var(--color-mainbg);
+    }
+    .bg-card {
+        background-color: var(--color-card);
+    }
+    .text-app {
+        color: var(--color-text);
+    }
+
+    .bg-app {
+        background-color: var(--color-bg);
+    }
+
+    .text-primary {
+        color: var(--color-primary);
+    }
+
+    .bg-primary {
+        background-color: var(--color-primary);
+    }
+
+    .text-secondary {
+        color: var(--color-secondary);
+    }
+
+    .bg-secondary {
+        background-color: var(--color-secondary);
+    }
+
+    .priority-select {
+        @apply md:px-3 md:py-2 px-1 py-1 mx-1 sm:rounded-lg rounded-sm border font-medium cursor-pointer;
+        background-color: var(--color-mainbg);
+        color: var(--color-text);
+        border-color: var(--color-primary);
+    }
+}
