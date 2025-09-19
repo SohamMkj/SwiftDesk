@@ -11,6 +11,7 @@ const TicketDetails = () => {
   const [ticket, setTicket] = useState(null);
   const [tickets, setTickets] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [isTouched, setIsTouched] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editData, setEditData] = useState({
@@ -128,7 +129,6 @@ const TicketDetails = () => {
     notify("comment deleted");
   };
 
-
   const openDeleteModal = useCallback(() => setIsModalOpen(true), []);
   const closeDeleteModal = useCallback(() => setIsModalOpen(false), []);
 
@@ -191,6 +191,11 @@ const TicketDetails = () => {
                   }
                   className="focus:outline-none w-full md:px-3 px-1 md:py-2 py-1 rounded border border-[var(--color-primary)] md:text-base text-sm"
                 />
+                {(!editData.title || editData.title.length < 3) && (
+                  <p className="text-red-500 text-xs mt-1">
+                    Title must be at least 3 characters long.
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block text-base font-semibold mb-2 mt-4">
@@ -203,6 +208,12 @@ const TicketDetails = () => {
                   }
                   className="focus:outline-none w-full rounded md:px-3 px-1 md:py-2 py-1 md:h-32 h-20 resize-none border border-[var(--color-primary)] md:text-base text-sm"
                 />
+                {(!editData.description ||
+                  editData.description.length < 10) && (
+                  <p className="text-red-500 text-xs mt-1">
+                    Description must be at least 10 characters long.
+                  </p>
+                )}
               </div>
               <div>
                 <label className="block text-base font-semibold mb-2 mt-4">
@@ -215,10 +226,16 @@ const TicketDetails = () => {
                   }
                   className="focus:outline-none priority-select w-full border md:px-3 md:py-2 rounded md:text-base text-sm"
                 >
+                  <option value="">Select Priority</option>
                   <option>Low</option>
                   <option>Medium</option>
                   <option>High</option>
                 </select>
+                {!editData.priority && (
+                  <p className="text-red-500 text-xs mt-1">
+                    Please select a priority.
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex md:justify-end justify-center gap-2 mt-6">
@@ -229,7 +246,17 @@ const TicketDetails = () => {
                 Cancel
               </button>
               <button
-                onClick={handleEditSave}
+                onClick={() => {
+                  if (
+                    editData.title &&
+                    editData.title.length >= 3 &&
+                    editData.description &&
+                    editData.description.length >= 10 &&
+                    editData.priority
+                  ) {
+                    handleEditSave();
+                  }
+                }}
                 className="md:px-4 px-2 md:py-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 hover:cursor-pointer"
               >
                 Save
@@ -238,6 +265,7 @@ const TicketDetails = () => {
           </div>
         </div>
       )}
+
       {!isEditing && (
         <>
           <div className="flex justify-between">
@@ -377,16 +405,32 @@ const TicketDetails = () => {
             </div>
 
             <div className="flex md:flex-row flex-col gap-2">
-              <input
-                type="text"
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Add a comment..."
-                className="flex-1 md:px-3 md:py-2 px-2 py-1 rounded border-none priority-select focus:border-none"
-              />
+              <div className="flex-1 flex flex-col">
+                <input
+                  type="text"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  onBlur={() => setIsTouched(true)} // mark as touched when user leaves input
+                  placeholder="Add a comment..."
+                  className="flex-1 md:px-3 md:py-2 px-2 py-1 rounded border-none priority-select focus:border-none"
+                />
+                {isTouched && (!newComment || newComment.trim().length < 3) && (
+                  <p className="text-red-500 text-xs mt-1">
+                    Comment must be at least 3 characters long.
+                  </p>
+                )}
+              </div>
+
               <button
-                onClick={handleAddComment}
-                className="bg-primary text-white md:px-4 md:py-2 px-2 py-1 md:text-base text-sm rounded hover:bg-secondary hover:cursor-pointer"
+                onClick={() => {
+                  setIsTouched(true);
+                  if (newComment && newComment.trim().length >= 3) {
+                    handleAddComment();
+                    setNewComment("");
+                    setIsTouched(false);
+                  }
+                }}
+                className="bg-primary text-white md:px-4 md:py-2 px-2 py-1 md:text-base text-sm rounded hover:bg-secondary hover:cursor-pointer h-10"
               >
                 Add
               </button>
