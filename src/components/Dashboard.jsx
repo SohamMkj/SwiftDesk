@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaRegCreditCard, FaTable, FaRegCopy } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineInbox } from "react-icons/ai";
-import toast from "react-hot-toast";
-import ConfirmModal from "./ConfirmModal";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiCloseFill } from "react-icons/ri";
+import toast from "react-hot-toast";
+import ConfirmModal from "./ConfirmModal";
 
 export default function Dashboard() {
   const [tickets, setTickets] = useState([]);
@@ -602,7 +602,7 @@ export default function Dashboard() {
                         </div>
 
                         {openDropdown === ticket.id && (
-                          <div className="absolute priority-select p-0 right-15 top-0 mt-2 w-40 rounded-lg shadow-xl text-sm z-50 overflow-hidden animate-fade-in">
+                          <div className="absolute priority-select p-0 right-10 md:right-16 top-0 mt-2 w-40 rounded-lg shadow-xl text-sm z-50 overflow-hidden animate-fade-in">
                             <button
                               onClick={() => {
                                 updateStatus(ticket.id);

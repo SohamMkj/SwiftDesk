@@ -56,7 +56,7 @@ export default function Sidebar() {
   return (
     <>
       {!isOpen && (
-        <div className="md:hidden fixed top-4 right-4 z-50">
+        <div className="md:hidden fixed top-4 right-2 ml-1 z-50">
           <button
             onClick={() => setIsOpen(true)}
             className="p-2 text-white bg-primary rounded-md shadow"
