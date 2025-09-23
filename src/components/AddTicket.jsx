@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const notify = () =>
   toast.success(`Ticket Created Successfully🎉`, {
@@ -24,6 +25,7 @@ export default function AddTicket() {
   const [priority, setPriority] = useState("Low");
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("localTickets")) || [];
@@ -79,6 +81,7 @@ export default function AddTicket() {
     setDescription("");
     setPriority("Low");
     setErrors({});
+    navigate(`/ticket/${newTicket.id}`);
   };
 
   return (

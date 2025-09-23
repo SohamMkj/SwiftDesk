@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegCreditCard, FaTable, FaRegCopy } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
@@ -85,7 +85,7 @@ export default function Dashboard() {
 
   const updateStatus = (id) => {
     const updated = tickets.map((item) =>
-      item.id === id
+      String(item.id) === String(id)
         ? {
             ...item,
             status:
@@ -102,14 +102,18 @@ export default function Dashboard() {
     notify("status updated");
   };
 
-  const filteredTickets = tickets.filter((item) => {
-    const matchSearch = item.title.toLowerCase().includes(search.toLowerCase());
-    const matchStatus =
-      statusFilter === "All" ? true : item.status === statusFilter;
-    const matchPriority =
-      priorityFilter === "All" ? true : item.priority === priorityFilter;
-    return matchSearch && matchStatus && matchPriority;
-  });
+  const filteredTickets = useMemo(() => {
+    return tickets.filter((item) => {
+      const matchSearch = item.title
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const matchStatus =
+        statusFilter === "All" ? true : item.status === statusFilter;
+      const matchPriority =
+        priorityFilter === "All" ? true : item.priority === priorityFilter;
+      return matchSearch && matchStatus && matchPriority;
+    });
+  }, [tickets, search, statusFilter, priorityFilter]);
 
   const copyToClipboard = (ticket) => {
     navigator.clipboard.writeText(ticket.id);
