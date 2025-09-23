@@ -51,11 +51,11 @@ const TicketBoard = () => {
 
   const handleDrop = (e, newStatus) => {
     const ticketId = e.dataTransfer.getData("ticketId");
-    const ticket = tickets.find((t) => t.id === ticketId);
+    const ticket = tickets.find((item) => item.id === ticketId);
     if (!ticket || ticket.status === newStatus) return;
 
-    const updated = tickets.map((t) =>
-      t.id === ticketId ? { ...t, status: newStatus } : t
+    const updated = tickets.map((item) =>
+      item.id === ticketId ? { ...item, status: newStatus } : item
     );
     setTickets(updated);
     notify("status updated");
@@ -264,7 +264,7 @@ const TicketBoard = () => {
               {col}
             </h2>
             {tickets
-              .filter((t) => t.status === col)
+              .filter((item) => item.status === col)
               .map((ticket) => renderTicketCard(ticket))}
           </section>
         ))}

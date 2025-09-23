@@ -405,9 +405,19 @@ export default function Dashboard() {
                     </div>
                   </div>
 
-                  <h3 className="xl:text-2xl :text-xl font-bold text-secondary mb-3 overflow-auto custom-scrollbar">
-                    {ticket.title}
-                  </h3>
+                  <div className="mb-3 relative group">
+                    <span className="absolute left-0 -top-12 max-w-full hidden rounded-md bg-gray-900 text-white text-xs p-2 shadow-lg group-hover:block z-50">
+                      {ticket.title}
+                      <div className="absolute left-4 top-full text-gray-600 text-lg">
+                        <IoIosArrowDown />
+                      </div>
+                    </span>
+                    <h3 className="xl:text-2xl :text-xl font-bold text-secondary mb-3 overflow-auto custom-scrollbar">
+                      {ticket.title.length > 15
+                        ? ticket.title.slice(0, 15) + "..."
+                        : ticket.title}
+                    </h3>
+                  </div>
 
                   <div className="flex xl:flex-row flex-col xl:justify-between justify-start gap-2 xl:items-center mb-3 md:text-base text-sm">
                     <span className="font-semibold text-secondary">
@@ -430,13 +440,7 @@ export default function Dashboard() {
                     </span>
                   </div>
 
-                  <div className="text-sm text-secondary mb-3 relative group">
-                    <span className="absolute left-0 -top-12 max-w-full hidden rounded-md bg-gray-900 text-white text-xs p-2 shadow-lg group-hover:block z-50">
-                      {ticket.description}
-                      <div className="absolute left-4 top-full text-gray-600 text-lg">
-                        <IoIosArrowDown />
-                      </div>
-                    </span>
+                  <div className="text-sm text-secondary mb-3">
                     <span>Description-</span>{" "}
                     {ticket.description.length > 25
                       ? ticket.description.slice(0, 25) + "..."

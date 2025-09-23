@@ -75,10 +75,10 @@ const TicketDetails = () => {
       },
     ];
 
-    const updatedTickets = tickets.map((t) =>
-      String(t.id) === String(id)
-        ? { ...t, comments: updatedCommentHistory }
-        : t
+    const updatedTickets = tickets.map((item) =>
+      String(item.id) === String(id)
+        ? { ...item, comments: updatedCommentHistory }
+        : item
     );
 
     setTickets(updatedTickets);
@@ -107,9 +107,8 @@ const TicketDetails = () => {
       editText: undefined,
     };
 
-    // update tickets list + localStorage
-    const updatedTickets = tickets.map((t) =>
-      String(t.id) === String(id) ? { ...t, comments: updated } : t
+    const updatedTickets = tickets.map((item) =>
+      String(item.id) === String(id) ? { ...item, comments: updated } : item
     );
     setTickets(updatedTickets);
     localStorage.setItem("localTickets", JSON.stringify(updatedTickets));
@@ -118,7 +117,7 @@ const TicketDetails = () => {
   };
 
   const handleDeleteComment = (index) => {
-    const updated = ticket.comments.filter((_, i) => i !== index);
+    const updated = ticket.comments.filter((_, item) => item !== index);
 
     const updatedTickets = tickets.map((item) =>
       String(item.id) === String(id) ? { ...item, comments: updated } : item
@@ -308,26 +307,26 @@ const TicketDetails = () => {
           </div>
 
           <div className="space-y-2 mb-6">
-            <p className="md:text-lg text-base">
+            <p className="md:text-lg text-base overflow-auto custom-scrollbar">
               <span className="font-bold">Title:</span> {ticket.title}
             </p>
-            <p className="md:text-lg text-base">
+            <p className="md:text-lg text-base overflow-auto custom-scrollbar">
               <span className="font-bold">ID:</span> {id}
             </p>
-            <p className="md:text-lg text-base">
+            <p className="md:text-lg text-base overflow-auto custom-scrollbar">
               <span className="font-bold">By:</span>
               {ticket.name}
             </p>
-            <p className="md:text-lg text-base">
+            <p className="md:text-lg text-base overflow-auto custom-scrollbar">
               <span className="font-bold">Description:</span>{" "}
               <span className="overflow-auto custom-scrollbar">
                 {ticket.description}
               </span>
             </p>
-            <p className="md:text-lg text-base">
+            <p className="md:text-lg text-base overflow-auto custom-scrollbar">
               <span className="font-bold">Priority:</span> {ticket.priority}
             </p>
-            <p className="md:text-lg text-base">
+            <p className="md:text-lg text-base overflow-auto custom-scrollbar">
               <span className="font-bold">Created On:</span>{" "}
               {ticket.createdAt || "N/A"}
             </p>
@@ -410,7 +409,7 @@ const TicketDetails = () => {
                   type="text"
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
-                  onBlur={() => setIsTouched(true)} // mark as touched when user leaves input
+                  onBlur={() => setIsTouched(true)} 
                   placeholder="Add a comment..."
                   className="flex-1 md:px-3 md:py-2 px-2 py-1 rounded border-none priority-select focus:border-none"
                 />
